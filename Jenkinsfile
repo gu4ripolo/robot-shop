@@ -36,7 +36,7 @@ pipeline {
                 milestone(1)
                 kubernetesDeploy(
                     kubeconfigId: 'kubeconfig-credentials-id',
-                    configs: 'K8s/descriptors/*.yaml', 
+                    configs: 'K8s/descriptors/cart-deployment.yaml', 
                     enableConfigSubstitution: true
                 ) 
             }
