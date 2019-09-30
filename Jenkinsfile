@@ -6,9 +6,15 @@ pipeline {
         DOCKER_IMAGE_NAME = "safcdou/train-schedule"
     }
     stages {
+        when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
         stage('Build') {
             steps {
                 echo 'Running build automation'
+                    kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'K8s/descriptors/*.yaml', 
+                    enableConfigSubstitution: true
+                ) 
             }
         }
         stage('Build Docker Image') {
