@@ -5,10 +5,16 @@ pipeline {
         //AWS_SECRET_ACCESS_KEY = credentials('aws_secret_key')
         DOCKER_IMAGE_NAME = "safcdou/train-schedule"
     }
-    stages {
+    stages {     
         stage('Build') {
+            when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
                 echo 'Running build automation'
+                    kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'K8s/descriptors/*.yaml', 
+                    enableConfigSubstitution: true
+                ) 
             }
         }
         stage('Build Docker Image') {
