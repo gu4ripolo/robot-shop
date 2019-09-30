@@ -9,6 +9,7 @@ spec:
   - name: http
     port: 8080
     targetPort: 8080
+    nodePort: 30080
   selector:
     service: web
-  type: LoadBalancer
+  type: NodePort
