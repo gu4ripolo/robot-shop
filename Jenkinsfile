@@ -7,8 +7,14 @@ pipeline {
     }
     stages {
         stage('Build') {
+            when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
                 echo 'Running build automation'
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'K8s/descriptors/*.yaml', 
+                    enableConfigSubstitution: true
+                ) 
             }
         }
         stage('Build Docker Image') {
