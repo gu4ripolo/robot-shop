@@ -4,6 +4,7 @@ metadata:
   labels:
     service: catalogue
   name: catalogue
+  namespace: robot-shop
 spec:
   ports:
   - name: http
