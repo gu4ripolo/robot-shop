@@ -8,6 +8,8 @@ void setBuildStatus(String message, String state) {
   ]);
 }
 
+setBuildStatus("Build complete", "SUCCESS");
+
 pipeline {
     agent any
     environment {
@@ -18,7 +20,7 @@ pipeline {
     stages {     
         stage('test') {
             steps {
-                setBuildStatus("Build complete", "SUCCESS");
+                echo 'que que que queeeeeeeeeeeeeeeeeeeeeeeeeeeee !!!!!!!!1'
             }
         }
         stage('Pull Request') {
