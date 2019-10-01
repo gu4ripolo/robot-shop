@@ -1,3 +1,13 @@
+void setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/gu4ripolo/robot-shop"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
 pipeline {
     agent any
     environment {
@@ -6,6 +16,11 @@ pipeline {
         DOCKER_IMAGE_NAME = "safcdou/train-schedule"
     }
     stages {     
+        stage('test') {
+            steps {
+                setBuildStatus("Build complete", "SUCCESS");
+            }
+        }
         stage('Pull Request') {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
@@ -17,7 +32,7 @@ pipeline {
                 ) */
                 echo 'A new commit in the features branch has been detected'
                 input(message: "Do you want to create a Pull Request?", ok: "yes")
-                httpRequest authentication: 'github_access', contentType: 'APPLICATION_JSON_UTF8', httpMode: 'POST', requestBody: """{ "title": "Pull Request Created Automatically by Jenkins", "body": "From Jenkins job: ${env.BUILD_URL}", "head": "gu4ripolo:${env.BRANCH_NAME}", "base": "master"}""", url: "https://api.github.com/repos/gu4ripolo/robot-shop/pulls"
+                //httpRequest authentication: 'github_access', contentType: 'APPLICATION_JSON_UTF8', httpMode: 'POST', requestBody: """{ "title": "Pull Request Created Automatically by Jenkins", "body": "From Jenkins job: ${env.BUILD_URL}", "head": "gu4ripolo:${env.BRANCH_NAME}", "base": "master"}""", url: "https://api.github.com/repos/gu4ripolo/robot-shop/pulls"
             }
         }
         stage('Build Docker Image') {
