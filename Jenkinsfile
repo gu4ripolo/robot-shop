@@ -8,9 +8,7 @@ void setBuildStatus(String message, String state) {
      ]);
 }
 
-pipeline {  
-    setBuildStatus("Build complete", "SUCCESS");
-    
+pipeline {          
     agent any
     environment {
         //AWS_ACCESS_KEY_ID = credentials('aws_access_key')
@@ -21,6 +19,7 @@ pipeline {
         stage('test') {
             steps {
                 echo 'que que que queeeeeeeeeeeeeeeeeeeeeeeeeeeee !!!!!!!!1'
+                setBuildStatus("Build complete", "SUCCESS");
             }
         }
         stage('Pull Request') {
