@@ -2,12 +2,23 @@ void setBuildStatus(String message, String state) {
     step([
         $class: "GitHubCommitStatusSetter",
         reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/gu4ripolo/robot-shop"],
-        contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
+        contextSource: [$class: "ManuallyEnteredCommitContextSource", context: context"],
         errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
         statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
      ]);
 }
 
+void buildStep(String context, Closure closure) {
+  stage(context);
+  try {
+    setBuildStatus(context, "In progress...", "PENDING");
+    closure();
+  } catch (Exception e) {
+    setBuildStatus(context, e.take(140), "FAILURE");
+  }
+    setBuildStatus(context, "Success", "SUCCESS");
+}
+            
 pipeline {          
     agent any
     environment {
@@ -16,7 +27,16 @@ pipeline {
         DOCKER_IMAGE_NAME = "safcdou/train-schedule"
     }
     stages {     
+        stage('Checkout') {
+            when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
+            steps {
+                buildStep('Checkout'){
+                    checkout scm
+                }
+            }
+        }
         stage('test') {
+            when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
                 echo 'que que que queeeeeeeeeeeeeeeeeeeeeeeeeeeee !!!!!!!!1'
                 setBuildStatus("Build complete", "SUCCESS");
