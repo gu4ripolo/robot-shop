@@ -6,7 +6,7 @@ pipeline {
         DOCKER_IMAGE_NAME = "safcdou/train-schedule"
     }
     stages {     
-        stage('new commit') {
+        stage('Pull Request') {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
                 /*echo 'Running build automation'
@@ -15,7 +15,9 @@ pipeline {
                     configs: 'K8s/descriptors/*.yaml', 
                     enableConfigSubstitution: true
                 ) */
-                echo 'A new commit in github has been detected'
+                echo 'A new commit in the features branch has been detected'
+                input(message: "Do you want to create a Pull Request?", ok: "yes")
+                httpRequest authentication: 'github_access', contentType: 'APPLICATION_JSON_UTF8', httpMode: 'POST', requestBody: """{ "title": "Pull Request Created Automatically by Jenkins", "body": "From Jenkins job: ${env.BUILD_URL}", "head": "gu4ripolo:${env.BRANCH_NAME}", "base": "master"}""", url: "https://api.github.com/repos/gu4ripolo/robot-shop/pulls"
             }
         }
         stage('Build Docker Image') {
