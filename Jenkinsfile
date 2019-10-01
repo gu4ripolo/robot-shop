@@ -6,15 +6,16 @@ pipeline {
         DOCKER_IMAGE_NAME = "safcdou/train-schedule"
     }
     stages {     
-        stage('Build') {
+        stage('new commit') {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
-                echo 'Running build automation'
+                /*echo 'Running build automation'
                     kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
                     configs: 'K8s/descriptors/*.yaml', 
                     enableConfigSubstitution: true
-                ) 
+                ) */
+                echo 'A new commit in github has been detected'
             }
         }
         stage('Build Docker Image') {
