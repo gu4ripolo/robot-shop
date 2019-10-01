@@ -15,14 +15,7 @@ pipeline {
                 checkout scm
             }
         }
-        stage('test') {
-            when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
-            steps {
-                echo 'que que que queeeeeeeeeeeeeeeeeeeeeeeeeeeee !!!!!!!!1'
-                setBuildStatus("Build complete", "SUCCESS");
-            }
-        }
-        stage('Pull Request') {
+    stage('Pull Request') {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
                 /*echo 'Running build automation'
