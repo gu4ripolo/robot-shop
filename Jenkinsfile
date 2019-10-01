@@ -1,5 +1,4 @@
-pipeline {  
-    void setBuildStatus(String message, String state) {
+void setBuildStatus(String message, String state) {
     step([
         $class: "GitHubCommitStatusSetter",
         reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/gu4ripolo/robot-shop"],
@@ -7,8 +6,9 @@ pipeline {
         errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
         statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
      ]);
-    }
+}
 
+pipeline {  
     setBuildStatus("Build complete", "SUCCESS");
     
     agent any
