@@ -3,7 +3,7 @@ pipeline {
         kubernetes {
             label 'master'
             defaultContainer 'jnlp'
-            yamlFile 'K8s/descriptors/*.yaml'
+            yamlFile 'K8s/descriptors/*'
         }
     }
     environment {
