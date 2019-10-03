@@ -20,3 +20,8 @@ spec:
     comand:
     - cat
     tty: true
+  - name: kubectl
+    image: lachlanevenson/k8s-kubectl
+    comand:
+    - cat
+    tty: true
