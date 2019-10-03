@@ -1,5 +1,10 @@
 pipeline {
-    agent any 
+    agent {
+        kubernetes {
+            defaultContainer 'jnlp'
+            yamlFile '/K8s/descriptors/web-deployment.yaml'
+        }
+    }
     environment {
         //AWS_ACCESS_KEY_ID = credentials('aws_access_key')
         //AWS_SECRET_ACCESS_KEY = credentials('aws_secret_key')
