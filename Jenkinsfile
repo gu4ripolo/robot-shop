@@ -1,19 +1,22 @@
 pipeline {
+    agent any 
     environment {
         //AWS_ACCESS_KEY_ID = credentials('aws_access_key')
         //AWS_SECRET_ACCESS_KEY = credentials('aws_secret_key')
         DOCKER_IMAGE_NAME = "safcdou/train-schedule"
     }
-    agent {
-        kubernetes {
-            defaultContainer 'jnlp'
-            yamlFile 'K8s/descriptors/*yaml'
-        }
-    }
     triggers {
          pollSCM('H/5 * * * *')
     }
     stages {     
+        stage('test perro') {
+            when {
+                branc 'master' 
+            }
+            container('kubectl') {
+                sh 'kubectl get pods'
+            }
+        }
         stage('Checkout') {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
@@ -29,7 +32,7 @@ pipeline {
                 httpRequest authentication: 'github_access', contentType: 'APPLICATION_JSON_UTF8', httpMode: 'POST', requestBody: """{ "title": "Pull Request Created Automatically by Jenkins", "body": "From Jenkins job", "head": "gu4ripolo:features_demo", "base": "master"}""", url: "https://api.github.com/repos/gu4ripolo/robot-shop/pulls"
             }
         }
-        stage('Build Docker Image') {
+    stage('Build Docker Image') {
             when {
                 branch 'master'
             }
