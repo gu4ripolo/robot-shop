@@ -6,7 +6,7 @@ pipeline {
         }
     }
     stages {
-         stage('test') {
+         stage('Docker Version') {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
                 echo 'test'
