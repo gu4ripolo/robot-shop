@@ -1,7 +1,7 @@
 pipeline {
     agent {
         kubernetes {
-            label 'robot-shop'
+            label 'master'
             defaultContainer 'jnlp'
             yamlFile 'KubernetesPods.yaml'
         }
