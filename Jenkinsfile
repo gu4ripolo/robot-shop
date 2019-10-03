@@ -10,6 +10,7 @@ pipeline {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
                 echo 'test'
+            }
         }
     }
 
