@@ -6,27 +6,16 @@ pipeline {
         }
     }
     stages {
-         stage('Testing Containers') {
-            when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
-            steps {
-                container('docker') {
-                    sh 'docker --version'
-                }
-                container('kubectl') {
-                    sh 'kubectl version'
-                }
-            }
-        }
         stage('Build Docker Image') {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
                 container('docker') {
                     //docker build
-                    echo 'docker hace algo aquí'                    
+                    sh 'docker --version'                  
                 }
             }
         }
-        stage('kubernetes') {
+        stage('kube') {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
                 container('kubectl') {
