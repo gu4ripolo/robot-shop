@@ -12,7 +12,7 @@ pipeline {
             steps {
                 container('docker') {
                     echo '--- Docker Version ---'                    
-                    sh 'docker --version'
+                    sh 'docker --version && systemctl daemon-reload && systemctl enable docker --now'
                 }
             }
         }
@@ -20,7 +20,7 @@ pipeline {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
                 container('docker') {
-                    sh 'docker pull lachlanevenson/k8s-kubectl'
+                    sh ' docker pull bitnami/kubectl:latest'
                 }
             }
         }
