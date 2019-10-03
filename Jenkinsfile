@@ -58,6 +58,7 @@ pipeline {
                     configs: 'K8s/descriptors/*.yaml', 
                     enableConfigSubstitution: true
                 ) */
+                echo 'ici et maintenant'
             }
         }
     }
