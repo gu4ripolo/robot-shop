@@ -5,18 +5,8 @@ metadata:
     some-label: some-label-value
 spec:
   containers:
-  - name: maven
-    image: maven:alpine
-    command:
-    - cat
-    tty: true
-  - name: busybox
-    image: busybox
-    command:
-    - cat
-    tty: true
-  - name: docker
-    image: docker
+  - name: ubuntu
+    image: ubuntu
     comand:
     - cat
     tty: true
