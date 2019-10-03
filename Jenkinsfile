@@ -10,7 +10,7 @@ pipeline {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
                 echo 'test'
-                cointainer('maven') {
+                container('maven') {
                     sh 'mvn -version'
                 }
             }
