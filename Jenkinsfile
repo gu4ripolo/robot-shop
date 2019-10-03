@@ -9,12 +9,9 @@ pipeline {
          pollSCM('H/5 * * * *')
     }
     stages {     
-        stage('test perro') {
-            when {
-                branc 'master' 
-            }
+        stage('Run kubectl') {
             container('kubectl') {
-                sh 'kubectl get pods'
+            sh "kubectl get pods"
             }
         }
         stage('Checkout') {
