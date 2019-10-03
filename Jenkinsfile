@@ -10,8 +10,8 @@ pipeline {
         stage('Pulling Kubernetes') {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
-                container('kubectl') {
-                    sh "kubectl get pods"
+                container('docker') {
+                    sh "docker run --rm lachlanevenson/k8s-kubectl:``git rev-parse --abbrev-ref HEAD`` --server=https://kubernetes.docker.internal:6443 get pods"
                 }
             }
         }

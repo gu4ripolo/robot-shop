@@ -5,8 +5,8 @@ metadata:
     some-label: some-label-value
 spec:
   containers:
-  - name: kubectl
-    image: lachlanevenson/k8s-kubectl
+  - name: docker
+    image: docker
     comand:
     - cat
     tty: true
