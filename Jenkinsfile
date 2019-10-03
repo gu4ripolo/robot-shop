@@ -10,7 +10,9 @@ pipeline {
         stage('Pulling Kubernetes') {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
-                echo 'test'
+                container('kubectl') {
+                    sh "kubectl get pods"
+                }
             }
         }
     }
