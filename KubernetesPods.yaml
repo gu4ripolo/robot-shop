@@ -19,9 +19,4 @@ spec:
     image: docker
     comand:
     - cat
-    tty: true  
-  - name: kubectl
-    image: bitnami/kubectl
-    comand:
-    - cat
     tty: true

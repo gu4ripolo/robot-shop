@@ -6,12 +6,16 @@ pipeline {
         }
     }
     stages {
-         stage('Docker Version') {
+         stage('Pulling kubernetes image') {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
-                echo 'test'
                 container('docker') {
+                    echo '--- Docker Version ---'                    
                     sh 'docker --version'
+                    echo '--- Pulling Kubernetes ---' 
+                    sh 'docker pull bitnami/kubectl'
+                    echo '--- Validating Kubernetes ---' 
+                    sh 'kubectl get pods'
                 }
             }
         }
