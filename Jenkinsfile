@@ -6,12 +6,12 @@ pipeline {
         }
     }
     stages {
-        stage('Build Docker Image') {
+         stage('test') {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
+                echo 'test'
                 container('docker') {
-                    //docker build
-                    sh 'docker --version'                  
+                    sh 'docker --version'
                 }
             }
         }
