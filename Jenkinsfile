@@ -20,7 +20,7 @@ pipeline {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
                 container('docker') {
-                    sh 'apt-get install -y kubectl'
+                    sh 'docker pull lachlanevenson/k8s-kubectl'
                 }
             }
         }
