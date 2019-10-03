@@ -7,12 +7,20 @@ pipeline {
         }
     }
     stages {
-         stage('Pulling kubernetes image') {
+         stage('Validating Docker') {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
                 container('docker') {
                     echo '--- Docker Version ---'                    
                     sh 'docker --version'
+                }
+            }
+        }
+        stage('Pulling Kubernetes') {
+            when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
+            steps {
+                container('docker') {
+                    sh 'apt-get install -y kubectl'
                 }
             }
         }
