@@ -5,23 +5,13 @@ metadata:
     some-label: some-label-value
 spec:
   containers:
-  - name: maven
-    image: maven:alpine
-    command:
-    - cat
-    tty: true
-  - name: busybox
-    image: busybox
-    command:
-    - cat
-    tty: true
   - name: docker
     image: docker
     comand:
     - cat
     tty: true 
   - name: kubectl
-    image: lachlanevenson/k8s-kubectl:v1.8.8
+    image: lachlanevenson/k8s-kubectl:v1.16.0
     comand:
     - cat
     tty: true
