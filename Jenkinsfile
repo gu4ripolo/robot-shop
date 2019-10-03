@@ -10,9 +10,11 @@ pipeline {
         stage('Pulling Kubernetes') {
             when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
             steps {
-                container('docker') {
-                    sh "docker run --rm lachlanevenson/k8s-kubectl:``git rev-parse --abbrev-ref HEAD`` --server=https://kubernetes.docker.internal:6443 get pods"
-                }
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'K8s/descriptors/web-deployment.yaml', 
+                    enableConfigSubstitution: true
+                )
             }
         }
     }
