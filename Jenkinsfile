@@ -15,13 +15,5 @@ pipeline {
                 }
             }
         }
-        stage('kube') {
-            when { expression { env.BRANCH_NAME ==~ /feat.*/ } }
-            steps {
-                container('kubectl') {
-                    sh 'kubectl get namespaces'
-                }
-            }
-        }
     }
 }
